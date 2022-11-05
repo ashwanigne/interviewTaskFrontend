@@ -25,7 +25,7 @@ const DisplayCheckbox = () => {
       setIsCheck(isCheck.filter((item) => item !== name));
     }
   };
-
+// 
   const checkBox =
     data &&
     data?.data.map((item, index) => {
