@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @font-face {
+    font-family: "UltraLight";  
+    src: local("NimbusSansNovusT-UltraLight"),
+      url("./font/NimbusSansNovusT-UltraLight.ttf") format("truetype");
+  } */
+html { font-size: 10px; }
