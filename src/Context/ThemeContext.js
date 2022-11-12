@@ -1,7 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 
-const ThemeContext = createContext("light");
-
 // export const ThemeProvider = ({ children }) => {
 //   const [userDetails, setUserDetails] = useState("");
 
@@ -17,5 +15,9 @@ const ThemeContext = createContext("light");
 //     </ThemeContext.Provider>
 //   );
 // };
+export const ThemeContext = createContext({
+  theme: "",
+  toggleStyle: (theme) => {},
+});
 
 export default ThemeContext;

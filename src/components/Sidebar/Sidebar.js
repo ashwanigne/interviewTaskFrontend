@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
-import ThemeContext from "../../Context/ThemeContext";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTheme } from "../../redux/actions";
 
 const Sidebar = () => {
-  const { style, toggleStyle } = useContext(ThemeContext);
+  const theme = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
 
   return (
     <div
       className={`w-[9rem]  ${
-        style !== "dark" ? "bg-white" : "bg-[#3339CD]"
+        theme !== "dark" ? "bg-white" : "bg-[#3339CD]"
       } h-screen pt-52 px-4  `}
     >
       <div className="flex flex-col h-screen">
@@ -23,16 +25,22 @@ const Sidebar = () => {
               <path
                 opacity="0.76"
                 d="M14.0133 4.21331C16.32 2.55997 18.7866 4.65331 20.6666 5.93331C23.1466 7.87997 26.04 9.57331 27.7466 12.2933C28.2 16.6133 28.16 21 27.84 25.32C27.8133 27.32 25.92 29.1733 23.9333 29.1866C18.6266 29.4 13.2933 29.4266 7.98665 29.1733C6.01331 29.1333 4.14665 27.2533 4.14665 25.28C3.87998 20.9866 3.74665 16.64 4.30665 12.36C6.62665 8.79997 10.5733 6.58664 14.0133 4.21331ZM6.66665 12.4933C6.61331 17.2133 6.63998 21.9333 6.69331 26.6533C12.8933 26.7466 19.1066 26.7466 25.3066 26.6533C25.36 21.9333 25.3733 17.2133 25.3333 12.5066C22.3066 10.0933 19.16 7.82664 16 5.59997C12.8533 7.85331 9.73331 10.1333 6.66665 12.4933Z"
-                fill="#6A6F7B"
+                fill={` ${theme !== "dark" ? "#6A6F7B" : "#fff"}`}
               />
               <path
                 opacity="0.76"
                 d="M12.5867 22.7333C14.8667 22.7333 17.1333 22.7333 19.4 22.7333C19.4 23.3599 19.4 24.6399 19.4 25.2666C17.1333 25.2666 14.8667 25.2666 12.5867 25.2666C12.5867 24.6266 12.5867 23.3599 12.5867 22.7333Z"
-                fill="#6A6F7B"
+                fill={` ${theme !== "dark" ? "#6A6F7B" : "#fff"}`}
               />
             </svg>
           </span>
-          <span className="w-[6.2rem] h-[6rem] inline-block self-center  relative bg-[#F1F5FD] rounded-[10px] border border-[#F1F5FD]">
+          <span
+            className={`${
+              theme !== "dark" ? "bg-[#F1F5FD]" : "bg-[#676AD8]"
+            } w-[6.2rem] h-[6rem] inline-block self-center  relative  rounded-[10px] border ${
+              theme !== "dark" ? "border-[#F1F5FD]" : "border-[#8D8EF9]"
+            } `}
+          >
             <img
               src="/svg/icons8.svg"
               alt="sidebarIcon"
@@ -41,10 +49,16 @@ const Sidebar = () => {
           </span>
         </div>
         <div
-          className=" bg-[#F9FBFC] h-[12.1rem] w-[6.8rem] pt-4 flex flex-col justify-start gap-8 cursor-pointer"
-          onClick={() => toggleStyle("light")}
+          className={` ${
+            theme !== "dark" ? "bg-[#F9FBFC]" : "bg-[#3339CD]"
+          } rounded-xl  h-[12.1rem] w-[6.8rem] pt-4 p-2 flex flex-col justify-start gap-8 cursor-pointer ${
+            theme !== "dark" ? "" : "border border-[#6B6DE5]"
+          }`}
         >
-          <span className="  inline-block self-center  relative bg-[#F9FBFC]  w-[4.9rem] h-[4.3rem] rounded-[10px] shadow-3xl ">
+          <span
+            className="  inline-block self-center  relative bg-inherit  w-[4.9rem] h-[4.3rem] rounded-[10px] shadow-3xl "
+            onClick={() => dispatch(changeTheme("light"))}
+          >
             <svg
               width="18"
               height="18"
@@ -60,8 +74,10 @@ const Sidebar = () => {
             </svg>
           </span>
           <span
-            className="self-center cursor-pointer "
-            onClick={() => toggleStyle("dark")}
+            className={`self-center cursor-pointer w-full h-24 rounded-2xl flex justify-center items-center ${
+              theme !== "dark" ? "" : "bg-[#989BFF]"
+            }`}
+            onClick={() => dispatch(changeTheme("dark"))}
           >
             <svg
               width="20"
@@ -72,7 +88,7 @@ const Sidebar = () => {
             >
               <path
                 d="M0.0909249 8.79893C0.53173 4.28783 4.37876 0.452255 8.88985 0C8.55782 2.08381 7.01214 3.82985 7.14953 6.02243C6.91482 9.57749 9.73711 13.041 13.3208 13.3787C15.3359 13.7966 17.2251 12.8864 19.0913 12.2853C19.9959 12.8749 19.286 13.8195 18.9768 14.5408C16.956 18.5997 11.9927 20.861 7.60179 19.6931C2.85598 18.5882 -0.613218 13.6478 0.0909249 8.79893ZM1.45914 9.45727C1.03551 14.3348 5.52943 18.8916 10.4126 18.5539C13.2807 18.5195 15.708 16.7506 17.4483 14.6095C13.9334 15.4167 9.92603 14.5351 7.66476 11.5697C5.36914 8.93632 5.28899 5.16372 6.39387 1.99221C3.73759 3.57796 1.56218 6.25142 1.45914 9.45727Z"
-                fill="#696E78"
+                fill={` ${theme !== "dark" ? "#696E78" : "#fff"}`}
               />
             </svg>
           </span>

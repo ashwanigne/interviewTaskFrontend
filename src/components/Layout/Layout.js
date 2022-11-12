@@ -1,12 +1,16 @@
-import React, { useState } from "react";
-import Accordion from "../Acordion/Accordion";
+import React from "react";
+import { useSelector } from "react-redux";
 import Main from "../Main/Main";
 import Sidebar from "../Sidebar/Sidebar";
 
 const Layout = () => {
-  const [darkToggle, setDarkToggle] = useState(false);
+  const theme = useSelector((state) => state.theme);
   return (
-    <div className="flex h-screen">
+    <div
+      className={`flex min-h-screen  ${
+        theme !== "dark" ? "bg-white" : "bg-[#3339cd]"
+      }`}
+    >
       <div className="w-[9rem]">
         <Sidebar />
       </div>
