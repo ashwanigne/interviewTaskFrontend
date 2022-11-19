@@ -9,7 +9,6 @@ const DisplayCheckbox = () => {
     const api_data = await fetch(
       "https://floating-brushlands-13647.herokuapp.com"
     ).then((res) => res.json());
-
     let changed_data = api_data.data.map((dummy, dummyIndex) => {
       return {
         ...dummy,

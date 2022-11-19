@@ -1,10 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DisplayCheckbox from "../DisplayCheckbox/DisplayCheckbox";
 import { useSelector } from "react-redux";
+import TimeList from "../TimeList/TimeList";
+import DataList from "../DataList/DataList";
 
 const Accordion = () => {
   const [open, setOpen] = useState(false);
   const theme = useSelector((state) => state.theme);
+  const [apiTime, setApiTime] = useState([]);
+  const [apiData, setApiData] = useState([]);
+  const [number, setNumber] = useState();
+  const [dataNumber, setDataNumber] = useState();
+  async function getTime() {
+    const api_data = await fetch("https://floating-brushlands-13647.herokuapp.com/time").then((res) =>
+      res.json()
+    );
+    setApiTime(api_data.data);
+    const uniqueIds = new Set([]);
+
+    api_data.data?.map((item) => {
+      const numberData = item.path.split("/").slice(2)[0];
+      uniqueIds.add(numberData);
+    });
+    setNumber(uniqueIds);
+  }
+  async function getData() {
+    const api_data = await fetch("https://floating-brushlands-13647.herokuapp.com/data").then((res) =>
+      res.json()
+    );
+    setApiData(api_data.data);
+    const uniqueIds = new Set([]);
+
+    api_data.data?.map((item) => {
+      const numberData = item.path.split("/").slice(2)[0];
+      uniqueIds.add(numberData);
+    });
+    setDataNumber(uniqueIds);
+  }
+
+  useEffect(() => {
+    getTime();
+    getData();
+  }, []);
 
   return (
     <>
@@ -37,7 +74,7 @@ const Accordion = () => {
             </svg>
           </span>
           <h3
-            className={`font-bold text-xl font flex-1 w-5/6 text-left ${
+            className={`cursor-pointer font-bold text-xl font flex-1 w-5/6 text-left ${
               theme !== "dark" ? "text-[#4B50BA]" : "text-white"
             }  leading-[26px] pl-8  `}
           >
@@ -73,8 +110,9 @@ const Accordion = () => {
       </div>
       <div>
         {open && (
-          <div className="mt-16 w-full pl-32 h-full">
-            <DisplayCheckbox />
+          <div className="mt-16 w-full text-left pl-32 h-full">
+            <TimeList number={number} apiData={apiTime} />
+            <DataList number={dataNumber} apiData={apiData} />
           </div>
         )}
       </div>
